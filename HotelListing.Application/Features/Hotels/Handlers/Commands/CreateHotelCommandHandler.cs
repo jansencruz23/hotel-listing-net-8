@@ -43,12 +43,12 @@ namespace HotelListing.Application.Features.Hotels.Handlers.Commands
             }
 
             var hotel = _mapper.Map<Hotel>(request.HotelDto);
-            var hotelId = await _unitOfWork.HotelRepository.Add(hotel);
+            hotel = await _unitOfWork.HotelRepository.Add(hotel);
             await _unitOfWork.SaveAsync();
 
             response.Success = true;
             response.Message = "Creation is successful";
-            response.Id = hotelId;
+            response.Id = hotel.Id;
 
             _logger.LogInformation($"Succesful create in {nameof(CreateHotelCommandHandler)}");
             return response;

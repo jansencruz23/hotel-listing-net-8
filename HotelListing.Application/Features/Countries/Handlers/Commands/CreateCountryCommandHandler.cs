@@ -42,12 +42,12 @@ namespace HotelListing.Application.Features.Countries.Handlers.Commands
             }
 
             var country = _mapper.Map<Country>(request.CountryDto);
-            var countryId = await _unitOfWork.CountryRepository.Add(country);
+            country = await _unitOfWork.CountryRepository.Add(country);
             await _unitOfWork.SaveAsync();
 
             response.Success = true;
             response.Message = "Creation is successful";
-            response.Id = countryId;
+            response.Id = country.Id;
 
             _logger.LogInformation($"Succesful create in {nameof(CreateCountryCommandHandler)}");
             return response;

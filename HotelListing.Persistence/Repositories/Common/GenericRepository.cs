@@ -19,10 +19,10 @@ namespace HotelListing.Persistence.Repositories.Common
             _dbContext = dbContext;
         }
 
-        public async Task<int> Add(T entity)
+        public async Task<T> Add(T entity)
         {
             var result = await _dbContext.AddAsync(entity);
-            return entity.Id;
+            return entity;
         }
 
         public async Task Delete(int id)
@@ -39,7 +39,7 @@ namespace HotelListing.Persistence.Repositories.Common
 
         public async Task<T> Get(int id)
         {
-            return await _dbContext.FindAsync<T>(id);
+            return await _dbContext.Set<T>().FindAsync(id);
         }
 
         public async Task<List<T>> GetAll()

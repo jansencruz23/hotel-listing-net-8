@@ -30,6 +30,17 @@ namespace HotelListing.Persistence.Repositories
             return hotels;
         }
 
+        public async Task<List<Hotel>> GetHotelsByCountryId(int id)
+        {
+            var hotels = await _dbContext.Hotels
+                .AsNoTracking()
+                .Where(q => q.CountryId == id)
+                .Include(q => q.Country)
+                .ToListAsync();
+
+            return hotels;
+        }
+
         public async Task<Hotel> GetHotelWithDetails(int id)
         {
             var hotel = await _dbContext.Hotels

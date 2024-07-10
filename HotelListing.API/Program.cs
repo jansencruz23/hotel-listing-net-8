@@ -1,3 +1,4 @@
+using HotelListing.API.Middlewares;
 using HotelListing.Application;
 using HotelListing.Persistence;
 using Newtonsoft.Json;
@@ -20,6 +21,7 @@ builder.Services.AddSerilog();
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
@@ -40,12 +42,15 @@ builder.Services.AddControllers()
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseSwagger();
+
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();

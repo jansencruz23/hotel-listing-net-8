@@ -12,7 +12,7 @@ namespace HotelListing.Application.Contracts.Persistence.Common
     {
         Task<List<T>> GetAll();
         Task<T> Get(int id);
-        Task<int> Add(T entity);
+        Task<T> Add(T entity);
         void Update(T entity);
         Task Delete(int id);
         Task<bool> Exists(int id);

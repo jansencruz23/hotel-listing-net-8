@@ -12,5 +12,6 @@ namespace HotelListing.Application.Contracts.Persistence
     {
         Task<List<Hotel>> GetAllHotelsWithDetails();
         Task<Hotel> GetHotelWithDetails(int id);
+        Task<List<Hotel>> GetHotelsByCountryId(int id);
     }
 }

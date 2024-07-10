@@ -26,7 +26,7 @@ namespace HotelListing.Application.Features.Countries.Handlers.Queries
 
             try
             {
-                var country = await _unitOfWork.CountryRepository.Get(request.Id);
+                var country = await _unitOfWork.CountryRepository.GetCountryWithDetails(request.Id);
                 var countryDto = _mapper.Map<CountryDto>(country);
 
                 _logger.LogInformation($"Successfully fetched and mapped {nameof(CountryDto)}");

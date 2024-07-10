@@ -41,9 +41,9 @@ namespace HotelListing.Application.Features.Countries.Handlers.Commands
                 throw new ValidationException(validationResult);
             }
 
-            var existing = await _unitOfWork.HotelRepository.Exists(request.Id);
+            var existing = await _unitOfWork.HotelRepository.Get(request.Id);
 
-            if (!existing)
+            if (existing == null)
             {
                 response.Success = false;
                 response.Message = $"{nameof(Country)} with id: {request.Id} is not existing";

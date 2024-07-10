@@ -39,9 +39,9 @@ namespace HotelListing.Application.Features.Hotels.Handlers.Commands
                 throw new ValidationException(validationResult);
             }
 
-            var existing = await _unitOfWork.HotelRepository.Exists(request.Id);
+            var hotel = await _unitOfWork.HotelRepository.Get(request.Id);
 
-            if (!existing)
+            if (hotel == null)
             {
                 response.Success = false;
                 response.Message = $"{nameof(Hotel)} with id: {request.Id} is not existing";
@@ -49,7 +49,7 @@ namespace HotelListing.Application.Features.Hotels.Handlers.Commands
                 throw new NotFoundException(nameof(Hotel), request.Id);
             }
 
-            var hotel = _mapper.Map<Hotel>(request.HotelDto);
+            _mapper.Map(request.HotelDto, hotel);
             _unitOfWork.HotelRepository.Update(hotel);
             await _unitOfWork.SaveAsync();
 

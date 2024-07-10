@@ -26,8 +26,7 @@ namespace HotelListing.Application.Features.Countries.Handlers.Queries
 
             try
             {
-                var countries = await _unitOfWork.CountryRepository.GetAll();
-                var hotels = await _unitOfWork.HotelRepository.GetAll();
+                var countries = await _unitOfWork.CountryRepository.GetAllCountriesWithDetails();
                 var countriesDto = _mapper.Map<List<CountryDto>>(countries);
 
                 _logger.LogInformation($"Successfully fetched and mapped {nameof(CountryDto)}");

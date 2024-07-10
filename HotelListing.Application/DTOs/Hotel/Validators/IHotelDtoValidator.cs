@@ -14,7 +14,7 @@ namespace HotelListing.Application.DTOs.Hotel.Validators
         {
             RuleFor(q => q.Name)
                 .NotNull().WithMessage("{PropertyName} must not be empty.")
-                .MaximumLength(50).WithMessage("{PropertyName} must not exceed {MaximumValue} characters.");
+                .MaximumLength(50).WithMessage("{PropertyName} must not exceed {MaxLength} characters.");
 
             RuleFor(q => q.Address)
                 .NotNull().WithMessage("{PropertyName} must not be empty.");

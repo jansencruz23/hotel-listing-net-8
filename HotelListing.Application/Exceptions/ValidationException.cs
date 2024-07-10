@@ -9,7 +9,7 @@ namespace HotelListing.Application.Exceptions
 {
     public class ValidationException : ApplicationException
     {
-        public List<string> Errors { get; set; }
+        public List<string> Errors { get; set; } = new();
 
         public ValidationException(ValidationResult validationResult)
         {
