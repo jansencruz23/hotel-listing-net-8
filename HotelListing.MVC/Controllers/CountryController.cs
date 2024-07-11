@@ -36,7 +36,7 @@ namespace HotelListing.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateCountryVM country)
         {
-            try
+            if (ModelState.IsValid)
             {
                 var response = await _countryService.CreateCountry(country);
                 if (response.Success)
@@ -45,10 +45,6 @@ namespace HotelListing.MVC.Controllers
                 }
 
                 ModelState.AddModelError("", string.Join("\n", response.Errors));
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError("", ex.Message);
             }
 
             return View(country);
@@ -66,7 +62,7 @@ namespace HotelListing.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, UpdateCountryVM country)
         {
-            try
+            if (ModelState.IsValid)
             {
                 var response = await _countryService.UpdateCountry(id, country);
                 if (response.Success)
@@ -75,10 +71,6 @@ namespace HotelListing.MVC.Controllers
                 }
 
                 ModelState.AddModelError("", string.Join("\n", response.Errors));
-            }
-            catch (Exception ex)
-            {
-                 ModelState.AddModelError("", ex.Message);
             }
 
             return View(country);

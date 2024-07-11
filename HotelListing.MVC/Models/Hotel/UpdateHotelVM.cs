@@ -2,7 +2,7 @@
 
 namespace HotelListing.MVC.Models.Hotel
 {
-    public class UpdateHotelVM : BaseHotelVM
+    public class UpdateHotelVM : CreateHotelVM
     {
         public int Id { get; set; }
     }

@@ -9,8 +9,9 @@ namespace HotelListing.MVC.Contracts
     {
         Task<List<HotelVM>> GetAllHotels();
         Task<HotelVM> GetHotel(int id);
+        Task<UpdateHotelVM> GetUpdateHotel(int id);
         Task<Response<int>> CreateHotel(CreateHotelVM hotel);
-        Task<Response<int>> UpdateHotel(int id, UpdateHotelVM country);
+        Task<Response<int>> UpdateHotel(int id, UpdateHotelVM hotel);
         Task<Response<int>> DeleteHotel(int id);
     }
 }
