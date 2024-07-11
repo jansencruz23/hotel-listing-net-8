@@ -13,13 +13,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{8F1E6808-9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{923016FB-5D29-406A-A941-6265C5B99591}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelListing.API", "HotelListing.API\HotelListing.API.csproj", "{AE16BF22-3E0B-4E9B-87D3-6CF56CF0BB5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelListing.API", "HotelListing.API\HotelListing.API.csproj", "{AE16BF22-3E0B-4E9B-87D3-6CF56CF0BB5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelListing.Application", "HotelListing.Application\HotelListing.Application.csproj", "{A4CF498A-6A43-46A6-A598-2B4555E3A8BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelListing.Application", "HotelListing.Application\HotelListing.Application.csproj", "{A4CF498A-6A43-46A6-A598-2B4555E3A8BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelListing.Domain", "HotelListing.Domain\HotelListing.Domain.csproj", "{DACB9E5C-C436-4549-A4B1-D8B471C5ACA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelListing.Domain", "HotelListing.Domain\HotelListing.Domain.csproj", "{DACB9E5C-C436-4549-A4B1-D8B471C5ACA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelListing.Persistence", "HotelListing.Persistence\HotelListing.Persistence.csproj", "{F6166727-2692-40E7-8B9F-FB6B5B0060C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelListing.Persistence", "HotelListing.Persistence\HotelListing.Persistence.csproj", "{F6166727-2692-40E7-8B9F-FB6B5B0060C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelListing.Identity", "HotelListing.Identity\HotelListing.Identity.csproj", "{690C0CBA-9FCA-4EA9-A552-376CFD8F93CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{90ADD0C6-3495-4F21-877A-8973ED8E7CE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelListing.MVC", "HotelListing.MVC\HotelListing.MVC.csproj", "{D46383E4-FAEB-4145-A426-23FD7AA7CF93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +49,14 @@ Global
 		{F6166727-2692-40E7-8B9F-FB6B5B0060C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6166727-2692-40E7-8B9F-FB6B5B0060C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6166727-2692-40E7-8B9F-FB6B5B0060C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{690C0CBA-9FCA-4EA9-A552-376CFD8F93CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{690C0CBA-9FCA-4EA9-A552-376CFD8F93CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{690C0CBA-9FCA-4EA9-A552-376CFD8F93CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{690C0CBA-9FCA-4EA9-A552-376CFD8F93CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D46383E4-FAEB-4145-A426-23FD7AA7CF93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D46383E4-FAEB-4145-A426-23FD7AA7CF93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D46383E4-FAEB-4145-A426-23FD7AA7CF93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D46383E4-FAEB-4145-A426-23FD7AA7CF93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +69,9 @@ Global
 		{A4CF498A-6A43-46A6-A598-2B4555E3A8BB} = {8F1E6808-9094-43E5-81C7-B82FCEA11DB4}
 		{DACB9E5C-C436-4549-A4B1-D8B471C5ACA2} = {8F1E6808-9094-43E5-81C7-B82FCEA11DB4}
 		{F6166727-2692-40E7-8B9F-FB6B5B0060C9} = {923016FB-5D29-406A-A941-6265C5B99591}
+		{690C0CBA-9FCA-4EA9-A552-376CFD8F93CA} = {923016FB-5D29-406A-A941-6265C5B99591}
+		{90ADD0C6-3495-4F21-877A-8973ED8E7CE4} = {7B30735B-F209-439D-97C6-C47C938898D9}
+		{D46383E4-FAEB-4145-A426-23FD7AA7CF93} = {90ADD0C6-3495-4F21-877A-8973ED8E7CE4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A237611E-28D8-4841-89DF-F67FECCCF8B8}
