@@ -28,6 +28,8 @@ namespace HotelListing.MVC.Services
             {
                 var response = new Response<int>();
                 var createCountryDto = _mapper.Map<CreateCountryDto>(country);
+
+                AddBearerToken();
                 var apiResponse = await _client.CountryPOSTAsync(createCountryDto);
 
                 if (apiResponse.Success)
@@ -56,6 +58,8 @@ namespace HotelListing.MVC.Services
             try
             {
                 var response = new Response<int>();
+
+                AddBearerToken();
                 var apiResponse = await _client.CountryDELETEAsync(id);
 
                 if (apiResponse.Success)
@@ -86,12 +90,14 @@ namespace HotelListing.MVC.Services
 
         public async Task<CountryVM> GetCountry(int id)
         {
+            AddBearerToken();
             var countryDto = await _client.CountryGETAsync(id);
             return _mapper.Map<CountryVM>(countryDto);
         }
 
         public async Task<UpdateCountryVM> GetUpdateCountry(int id)
         {
+            AddBearerToken();
             var countryDto = await _client.CountryGETAsync(id);
             return _mapper.Map<UpdateCountryVM>(countryDto);
         }
@@ -102,6 +108,8 @@ namespace HotelListing.MVC.Services
             {
                 var response = new Response<int>();
                 var updateCountryDto = _mapper.Map<UpdateCountryDto>(country);
+
+                AddBearerToken();
                 var apiResponse = await _client.CountryPUTAsync(id, updateCountryDto);
 
                 if (apiResponse.Success)
