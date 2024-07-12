@@ -4,6 +4,7 @@ using HotelListing.Application.Models.Identity;
 using HotelListing.Identity.Models;
 using MediatR.Wrappers;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -20,24 +21,30 @@ namespace HotelListing.Identity.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ILogger _logger;
         private readonly JwtSettings _jwtSettings;
 
         public AuthenticationService(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IOptions<JwtSettings> jwtSettings)
+            IOptions<JwtSettings> jwtSettings,
+            ILogger logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
             _jwtSettings = jwtSettings.Value;
         }
 
         public async Task<AuthenticationResponse> Login(AuthenticationRequest request)
         {
+            _logger.LogInformation($"Login attempt for '{request.Username}'");
+
             var user = await _userManager.FindByNameAsync(request.Username);
 
             if (user == null)
             {
+                _logger.LogError($"User '{request.Username}' is not found.");
                 throw new Exception($"User with username '{request.Username}' not found.");
             }
 
@@ -45,6 +52,7 @@ namespace HotelListing.Identity.Services
 
             if (!signInResult.Succeeded)
             {
+                _logger.LogError($"Invalid credentials for user '{request.Username}'.");
                 throw new Exception($"Password for user '{request.Username}' is incorrect.");
             }
 
@@ -57,21 +65,26 @@ namespace HotelListing.Identity.Services
                 Username = user.UserName
             };
 
+            _logger.LogInformation($"User '{request.Username}' logged in successfully.");
             return response;
         }
 
         public async Task<RegistrationResponse> Register(RegistrationRequest request)
         {
+            _logger.LogInformation($"Registration attempt for '{request.Username}'.");
+
             var existingUser = await _userManager.FindByNameAsync(request.Username);
             var existingEmail = await _userManager.FindByEmailAsync(request.Email);
 
             if (existingUser != null)
             {
+                _logger.LogError($"User with username '{request.Username}' is already existing.");
                 throw new Exception($"Username '{request.Username}' already exists.");
             }
 
             if (existingEmail != null)
             {
+                _logger.LogError($"Email '{request.Email}' is already existing.");
                 throw new Exception($"Email '{request.Email}' already exists.");
             }
 
@@ -88,10 +101,13 @@ namespace HotelListing.Identity.Services
 
             if (!result.Succeeded)
             {
+                _logger.LogError($"An error in the registration occurred: {result.Errors}");
                 throw new Exception($"{result.Errors}");
             }
 
             await _userManager.AddToRoleAsync(user, "User");
+
+            _logger.LogInformation($"Registered '{request.Username}' successfully.");
             return new RegistrationResponse { UserId = user.Id };
         }
 
@@ -116,7 +132,8 @@ namespace HotelListing.Identity.Services
             .Union(userClaims)
             .Union(roleClaims);
 
-            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
+            var jwtKey = Environment.GetEnvironmentVariable("HOTELLISTING_JWT_KEY");
+            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
             var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
             var jwtSecurityToken = new JwtSecurityToken(

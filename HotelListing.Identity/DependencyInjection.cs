@@ -22,6 +22,7 @@ namespace HotelListing.Identity
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
         {
             var jwtSettingsConfig = configuration.GetSection("JwtSettings");
+            var jwtKey = Environment.GetEnvironmentVariable("HOTELLISTING_JWT_KEY");
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
             services.Configure<JwtSettings>(jwtSettingsConfig);
@@ -55,9 +56,9 @@ namespace HotelListing.Identity
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ClockSkew = TimeSpan.Zero,
-                        ValidIssuer = configuration["JwtSettings:Issuer"],
-                        ValidAudience = configuration["JwtSettings:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]))
+                        ValidIssuer = jwtSettingsConfig.GetSection("Issuer").Value,
+                        ValidAudience = jwtSettingsConfig.GetSection("Audience").Value,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
                     };
                 });
 
