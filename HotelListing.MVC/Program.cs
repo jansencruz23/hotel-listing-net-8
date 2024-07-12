@@ -1,6 +1,8 @@
 using HotelListing.MVC.Contracts;
 using HotelListing.MVC.Services;
 using HotelListing.MVC.Services.Base;
+using HotelListing.MVC.Services.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,9 +12,21 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddHttpClient<IClient, Client>(client =>
     client.BaseAddress = new Uri("https://localhost:7025/"));
 
+builder.Services.Configure<CookiePolicyOptions>(options =>
+    options.MinimumSameSitePolicy = SameSiteMode.None);
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<ILocalStorageService, LocalStorageService>();
+builder.Services.AddTransient<IClientAuthenticationService, ClientAuthenticationService>();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/User/Login";
+        options.AccessDeniedPath = "/User/Login";
+    });
+
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<IHotelService, HotelService>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -26,6 +40,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();

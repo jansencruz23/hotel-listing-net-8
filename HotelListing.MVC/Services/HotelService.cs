@@ -9,7 +9,6 @@ namespace HotelListing.MVC.Services
 {
     public class HotelService : BaseHttpService, IHotelService
     {
-        private readonly IClient _client;
         private readonly ILocalStorageService _localStorage;
         private readonly IMapper _mapper;
 
@@ -18,7 +17,6 @@ namespace HotelListing.MVC.Services
             ILocalStorageService localStorage, 
             IMapper mapper) : base(client, localStorage)
         {
-            _client = client;
             _localStorage = localStorage;
             _mapper = mapper;
         }
@@ -52,9 +50,30 @@ namespace HotelListing.MVC.Services
             }
         }
 
-        public Task<Response<int>> DeleteHotel(int id)
+        public async Task<Response<int>> DeleteHotel(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var response = new Response<int>();
+                var apiResponse = await _client.HotelDELETEAsync(id);
+
+                if (apiResponse.Success)
+                {
+                    response.Data = apiResponse.Id;
+                    response.Success = true;
+                }
+                else
+                {
+                    response.Success = false;
+                    response.Data = id;
+                }
+
+                return response;
+            }
+            catch (ApiException ex)
+            {
+                return ConvertApiExceptions<int>(ex);
+            }
         }
 
         public async Task<List<HotelVM>> GetAllHotels()

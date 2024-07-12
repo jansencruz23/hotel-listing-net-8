@@ -40,6 +40,11 @@ namespace HotelListing.MVC.Services.Base
                 response.Message = "The requested item could not be found.";
                 return response;
             }
+            else if (ex.StatusCode == StatusCodes.Status401Unauthorized) // sample lang
+            {
+                response.Message = "Id ak edep otid!";
+                return response;
+            }
             else
             {
                 return response;

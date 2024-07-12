@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HotelListing.Identity\HotelListing.Identity.csproj" />
     <ProjectReference Include="..\HotelListing.Persistence\HotelListing.Persistence.csproj" />
   </ItemGroup>
 

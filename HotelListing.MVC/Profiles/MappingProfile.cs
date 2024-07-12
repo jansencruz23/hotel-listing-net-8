@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HotelListing.MVC.Models.Country;
 using HotelListing.MVC.Models.Hotel;
+using HotelListing.MVC.Models.Identity;
 using HotelListing.MVC.Services.Base;
 
 namespace HotelListing.MVC.Profiles
@@ -18,6 +19,9 @@ namespace HotelListing.MVC.Profiles
             CreateMap<CreateHotelDto, CreateHotelVM>().ReverseMap();
             CreateMap<UpdateHotelDto, UpdateHotelVM>().ReverseMap();
             CreateMap<HotelDto, UpdateHotelVM>().ReverseMap();
+
+            CreateMap<RegistrationRequest, RegisterVM>().ReverseMap();
+            CreateMap<AuthenticationRequest, LoginVM>().ReverseMap();
         }
     }
 }

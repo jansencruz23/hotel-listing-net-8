@@ -3,6 +3,7 @@ using HotelListing.Application.Features.Countries.Requests.Commands;
 using HotelListing.Application.Features.Countries.Requests.Queries;
 using HotelListing.Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,6 +12,7 @@ namespace HotelListing.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class CountryController(
         IMediator _mediator
         ) : ControllerBase

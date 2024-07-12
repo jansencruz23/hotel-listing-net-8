@@ -1,12 +1,14 @@
 ﻿using HotelListing.MVC.Contracts;
 using HotelListing.MVC.Models.Country;
 using HotelListing.MVC.Services.Base;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics.Metrics;
 
 namespace HotelListing.MVC.Controllers
 {
+    [Authorize]
     public class CountryController(
         ICountryService _countryService
         ) : Controller

@@ -10,7 +10,6 @@ namespace HotelListing.MVC.Services
 {
     public class CountryService : BaseHttpService, ICountryService
     {
-        private readonly IClient _client;
         private readonly ILocalStorageService _localStorage;
         private readonly IMapper _mapper;
 
@@ -19,7 +18,6 @@ namespace HotelListing.MVC.Services
             ILocalStorageService localStorage,
             IMapper mapper) : base(client, localStorage)
         {
-            _client = client;
             _localStorage = localStorage;
             _mapper = mapper;
         }
@@ -81,6 +79,7 @@ namespace HotelListing.MVC.Services
 
         public async Task<List<CountryVM>> GetAllCountries()
         {
+            AddBearerToken();
             var countriesDto = await _client.CountryAllAsync();
             return _mapper.Map<List<CountryVM>>(countriesDto);
         }
