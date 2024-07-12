@@ -21,14 +21,14 @@ namespace HotelListing.Identity.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ILogger _logger;
+        private readonly ILogger<AuthenticationService> _logger;
         private readonly JwtSettings _jwtSettings;
 
         public AuthenticationService(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IOptions<JwtSettings> jwtSettings,
-            ILogger logger)
+            ILogger<AuthenticationService> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
