@@ -2,12 +2,14 @@
 using HotelListing.MVC.Models;
 using HotelListing.MVC.Models.Hotel;
 using HotelListing.MVC.Services.Base.Responses;
+using HotelListing.MVC.Models.Pagination;
+using X.PagedList;
 
 namespace HotelListing.MVC.Contracts
 {
     public interface IHotelService
     {
-        Task<List<HotelVM>> GetAllHotels();
+        Task<IPagedList<HotelVM>> GetAllHotels(RequestParams requestParams);
         Task<HotelVM> GetHotel(int id);
         Task<UpdateHotelVM> GetUpdateHotel(int id);
         Task<Response<int>> CreateHotel(CreateHotelVM hotel);

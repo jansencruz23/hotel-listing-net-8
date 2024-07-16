@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using HotelListing.MVC.Contracts;
 using HotelListing.MVC.Models.Hotel;
+using HotelListing.MVC.Models.Pagination;
 using HotelListing.MVC.Services.Base;
 using HotelListing.MVC.Services.Base.Responses;
 using Microsoft.Build.Logging;
+using X.PagedList;
 
 namespace HotelListing.MVC.Services
 {
@@ -76,21 +78,24 @@ namespace HotelListing.MVC.Services
             }
         }
 
-        public async Task<List<HotelVM>> GetAllHotels()
+        public async Task<IPagedList<HotelVM>> GetAllHotels(RequestParams requestParams)
         {
-            var hotels = await _client.HotelAllAsync();
-            return _mapper.Map<List<HotelVM>>(hotels);
+            var response = await _client.HotelGETAsync(requestParams.PageNumber, requestParams.PageSize);
+            var hotels = _mapper.Map<List<HotelVM>>(response.Data);
+            var totalCount = response.TotalCount;
+
+            return new StaticPagedList<HotelVM>(hotels, requestParams.PageNumber, requestParams.PageSize, totalCount);
         }
 
         public async Task<HotelVM> GetHotel(int id)
         {
-            var hotel = await _client.HotelGETAsync(id);
+            var hotel = await _client.HotelGET2Async(id);
             return _mapper.Map<HotelVM>(hotel);
         }
 
         public async Task<UpdateHotelVM> GetUpdateHotel(int id)
         {
-            var hotel = await _client.HotelGETAsync(id);
+            var hotel = await _client.HotelGET2Async(id);
             return _mapper.Map<UpdateHotelVM>(hotel);
         }
 

@@ -1,16 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HotelListing.Application.Models.Pagination
+﻿namespace HotelListing.MVC.Models.Pagination
 {
     public class RequestParams
     {
-        const int maxPageSize = 2;
-        private int _pageSize = 10;
+        const int maxPageSize = 50;
+        private int _pageSize = 2;
 
         public int PageNumber { get; set; } = 1;
         public int PageSize

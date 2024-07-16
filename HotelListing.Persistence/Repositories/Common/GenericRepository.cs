@@ -58,6 +58,13 @@ namespace HotelListing.Persistence.Repositories.Common
                 .ToPagedListAsync(requestParams.PageNumber, requestParams.PageSize);
         }
 
+        public async Task<int> TotalCount()
+        {
+            return await _dbContext.Set<T>()
+                .AsNoTracking()
+                .CountAsync();
+        }
+
         public void Update(T entity)
         {
             _dbContext.Update(entity);

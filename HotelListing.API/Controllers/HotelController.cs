@@ -24,7 +24,7 @@ namespace HotelListing.API.Controllers
 
         // GET: api/<HotelController>
         [HttpGet]
-        public async Task<ActionResult<List<HotelDto>>> Get([FromQuery] RequestParams requestParams = null)
+        public async Task<ActionResult<PagedQueryResponse<HotelDto>>> Get([FromQuery] RequestParams requestParams = null)
         {
             var response = await _mediator.Send(new GetHotelListRequest(requestParams));
             return Ok(response);
@@ -32,7 +32,7 @@ namespace HotelListing.API.Controllers
 
         // GET api/<HotelController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<HotelDto>> Get(int id)
+        public async Task<ActionResult<HotelDto>> GetHotelById(int id)
         {
             var response = await _mediator.Send(new GetHotelDetailRequest(id));
             return Ok(response);

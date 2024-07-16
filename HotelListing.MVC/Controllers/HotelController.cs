@@ -1,5 +1,6 @@
 ﻿using HotelListing.MVC.Contracts;
 using HotelListing.MVC.Models.Hotel;
+using HotelListing.MVC.Models.Pagination;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,9 +13,9 @@ namespace HotelListing.MVC.Controllers
         ) : Controller
     {
         // GET: HotelController
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(RequestParams requestParams)
         {
-            var model = await _hotelService.GetAllHotels();
+            var model = await _hotelService.GetAllHotels(requestParams);
             return View(model);
         }
 

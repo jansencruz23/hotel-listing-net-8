@@ -3,6 +3,7 @@ using HotelListing.MVC.Models.Country;
 using HotelListing.MVC.Models.Hotel;
 using HotelListing.MVC.Models.Identity;
 using HotelListing.MVC.Services.Base;
+using X.PagedList;
 
 namespace HotelListing.MVC.Profiles
 {

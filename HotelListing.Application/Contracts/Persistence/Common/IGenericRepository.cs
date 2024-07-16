@@ -19,5 +19,6 @@ namespace HotelListing.Application.Contracts.Persistence.Common
         void Update(T entity);
         Task Delete(int id);
         Task<bool> Exists(int id);
+        Task<int> TotalCount();
     }
 }
