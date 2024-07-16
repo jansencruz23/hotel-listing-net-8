@@ -12,6 +12,10 @@ namespace HotelListing.Application.DTOs.Country.Validators
         public UpdateCountryDtoValidator()
         {
             Include(new ICountryDtoValidator());
+
+            RuleFor(q => q.Id)
+                .NotNull().WithMessage("{PropertyName} must not be empty.")
+                .GreaterThan(0).WithMessage("{PropertName} must be at least 1.");
         }
     }
 }

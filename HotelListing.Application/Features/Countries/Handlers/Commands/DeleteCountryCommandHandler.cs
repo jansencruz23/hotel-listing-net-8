@@ -24,6 +24,12 @@ namespace HotelListing.Application.Features.Countries.Handlers.Commands
         {
             _logger.LogInformation($"Accessed {nameof(DeleteCountryCommandHandler)}");
 
+            if (request.Id < 1)
+            {
+                _logger.LogError("The request is invalid");
+                throw new BadRequestException("The request is invalid.");
+            }
+
             var response = new BaseCommandResponse();
             var existing = await _unitOfWork.CountryRepository.Exists(request.Id);
 
@@ -32,6 +38,7 @@ namespace HotelListing.Application.Features.Countries.Handlers.Commands
                 response.Success = false;
                 response.Message = $"{nameof(Country)} with id: {request.Id} is not existing";
 
+                _logger.LogError($"Country not found in {nameof(DeleteCountryCommandHandler)}");
                 throw new NotFoundException(nameof(Country), request.Id);
             }
 

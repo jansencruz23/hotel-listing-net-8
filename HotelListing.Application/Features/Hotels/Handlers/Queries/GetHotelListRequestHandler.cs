@@ -24,7 +24,7 @@ namespace HotelListing.Application.Features.Hotels.Handlers.Queries
 
             try
             {
-                var hotels = await _unitOfWork.HotelRepository.GetAllHotelsWithDetails();
+                var hotels = await _unitOfWork.HotelRepository.GetAllHotelsWithDetails(request.RequestParams);
                 var hotelsDto = _mapper.Map<List<HotelDto>>(hotels);
 
                 _logger.LogInformation($"Successfully fetched and mapped {nameof(HotelDto)}");

@@ -1,4 +1,5 @@
 ﻿using HotelListing.Application.Contracts.Persistence;
+using HotelListing.Application.Models.Pagination;
 using HotelListing.Domain.Models;
 using HotelListing.Persistence.Repositories.Common;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace HotelListing.Persistence.Repositories
 {
@@ -26,6 +28,16 @@ namespace HotelListing.Persistence.Repositories
                 .AsNoTracking()
                 .Include(q => q.Country)
                 .ToListAsync();
+
+            return hotels;
+        }
+
+        public async Task<IPagedList<Hotel>> GetAllHotelsWithDetails(RequestParams requestParams)
+        {
+            var hotels = await _dbContext.Hotels
+                .AsNoTracking()
+                .Include(q => q.Country)
+                .ToPagedListAsync(requestParams.PageNumber, requestParams.PageSize);
 
             return hotels;
         }

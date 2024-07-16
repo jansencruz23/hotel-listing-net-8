@@ -24,6 +24,12 @@ namespace HotelListing.Application.Features.Hotels.Handlers.Commands
         {
             _logger.LogInformation($"Accessed {nameof(DeleteHotelCommandHandler)}");
 
+            if (request.Id < 1)
+            {
+                _logger.LogError("The request is invalid");
+                throw new BadRequestException("The request is invalid.");
+            }
+
             var response = new BaseCommandResponse();
             var existing = await _unitOfWork.HotelRepository.Exists(request.Id);
 

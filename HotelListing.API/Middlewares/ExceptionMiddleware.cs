@@ -56,6 +56,17 @@ namespace HotelListing.API.Middlewares
                     };
                     break;
 
+                case BadRequestException badRequest:
+                    statusCode = HttpStatusCode.BadRequest;
+                    problemDetails = new CustomProblemDetails
+                    {
+                        Title = badRequest.Message,
+                        Status = (int)statusCode,
+                        Type = nameof(BadRequestException),
+                        Detail = badRequest.InnerException?.Message,
+                    };
+                    break;
+
                 default:
                     problemDetails = new CustomProblemDetails
                     {

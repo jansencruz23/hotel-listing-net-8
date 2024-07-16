@@ -1,4 +1,5 @@
 ﻿using HotelListing.Application.DTOs.Hotel;
+using HotelListing.Application.Models.Pagination;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,5 +9,5 @@ using System.Threading.Tasks;
 
 namespace HotelListing.Application.Features.Hotels.Requests.Queries
 {
-    public record GetHotelListRequest : IRequest<List<HotelDto>>;
+    public record GetHotelListRequest(RequestParams RequestParams = null) : IRequest<List<HotelDto>>;
 }

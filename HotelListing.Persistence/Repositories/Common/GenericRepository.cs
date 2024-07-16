@@ -1,4 +1,5 @@
 ﻿using HotelListing.Application.Contracts.Persistence.Common;
+using HotelListing.Application.Models.Pagination;
 using HotelListing.Domain.Models.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace HotelListing.Persistence.Repositories.Common
 {
@@ -44,7 +46,16 @@ namespace HotelListing.Persistence.Repositories.Common
 
         public async Task<List<T>> GetAll()
         {
-            return await _dbContext.Set<T>().ToListAsync();
+            return await _dbContext.Set<T>()
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<IPagedList<T>> GetAll(RequestParams requestParams)
+        {
+            return await _dbContext.Set<T>()
+                .AsNoTracking()
+                .ToPagedListAsync(requestParams.PageNumber, requestParams.PageSize);
         }
 
         public void Update(T entity)

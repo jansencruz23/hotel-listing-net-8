@@ -1,6 +1,7 @@
 ﻿using HotelListing.Application.DTOs.Hotel;
 using HotelListing.Application.Features.Hotels.Requests.Commands;
 using HotelListing.Application.Features.Hotels.Requests.Queries;
+using HotelListing.Application.Models.Pagination;
 using HotelListing.Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -23,9 +24,9 @@ namespace HotelListing.API.Controllers
 
         // GET: api/<HotelController>
         [HttpGet]
-        public async Task<ActionResult<List<HotelDto>>> Get()
+        public async Task<ActionResult<List<HotelDto>>> Get([FromQuery] RequestParams requestParams = null)
         {
-            var response = await _mediator.Send(new GetHotelListRequest());
+            var response = await _mediator.Send(new GetHotelListRequest(requestParams));
             return Ok(response);
         }
 
