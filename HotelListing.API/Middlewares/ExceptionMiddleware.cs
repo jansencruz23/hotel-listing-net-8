@@ -8,10 +8,13 @@ namespace HotelListing.API.Middlewares
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<ExceptionMiddleware> _logger;
 
-        public ExceptionMiddleware(RequestDelegate next)
+        public ExceptionMiddleware(RequestDelegate next,
+            ILogger<ExceptionMiddleware> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext httpContext)
@@ -67,6 +70,17 @@ namespace HotelListing.API.Middlewares
                     };
                     break;
 
+                case UnauthorizedAccessException exception:
+                    statusCode = HttpStatusCode.Unauthorized;
+                    problemDetails = new CustomProblemDetails
+                    {
+                        Title = exception.Message,
+                        Status = (int)statusCode,
+                        Type = nameof(UnauthorizedAccessException),
+                        Detail = exception.InnerException?.Message
+                    };
+                    break;
+
                 default:
                     problemDetails = new CustomProblemDetails
                     {
@@ -78,6 +92,7 @@ namespace HotelListing.API.Middlewares
                     break;
                 }
 
+            _logger.LogError($"An error occured. Status code: {statusCode}. Title: {problemDetails.Title}. Message: {problemDetails.Detail}.");
             httpContext.Response.StatusCode = (int)statusCode;
             await httpContext.Response.WriteAsJsonAsync(problemDetails);
         }

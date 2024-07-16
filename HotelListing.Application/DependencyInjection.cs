@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Asp.Versioning;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,14 @@ namespace HotelListing.Application
             services.AddMediatR(config =>
                 config.RegisterServicesFromAssembly(
                     Assembly.GetExecutingAssembly()));
+
+            services.AddApiVersioning(options =>
+            {
+                options.ReportApiVersions = true;
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.DefaultApiVersion = new ApiVersion(majorVersion: 1, minorVersion: 0);
+                options.ApiVersionReader = new HeaderApiVersionReader("api-version");
+            });
 
             return services;
         }

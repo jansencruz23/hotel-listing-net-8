@@ -22,19 +22,11 @@ namespace HotelListing.Application.Features.Hotels.Handlers.Queries
         {
             _logger.LogInformation($"Accessed {nameof(GetHotelDetailRequestHandler)}");
 
-            try
-            {
-                var hotel = await _unitOfWork.HotelRepository.GetHotelWithDetails(request.Id);
-                var hotelDto = _mapper.Map<HotelDto>(hotel);
+            var hotel = await _unitOfWork.HotelRepository.GetHotelWithDetails(request.Id);
+            var hotelDto = _mapper.Map<HotelDto>(hotel);
 
-                _logger.LogInformation($"Successfully fetched and mapped {nameof(HotelDto)}");
-                return hotelDto;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error fetching and mapping");
-                throw;
-            }
+            _logger.LogInformation($"Successfully fetched and mapped {nameof(HotelDto)}");
+            return hotelDto;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using HotelListing.Application.DTOs.Hotel;
+﻿using Asp.Versioning;
+using HotelListing.Application.DTOs.Hotel;
 using HotelListing.Application.Features.Hotels.Requests.Commands;
 using HotelListing.Application.Features.Hotels.Requests.Queries;
 using HotelListing.Application.Models.Pagination;
@@ -11,6 +12,7 @@ using System.Net.WebSockets;
 
 namespace HotelListing.API.Controllers
 {
+    [ApiVersion("1.0")]
     [Route("api/[controller]")]
     [ApiController]
     public class HotelController : ControllerBase

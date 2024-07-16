@@ -24,19 +24,11 @@ namespace HotelListing.Application.Features.Countries.Handlers.Queries
         {
             _logger.LogInformation($"Accessed {nameof(GetCountryListRequestHandler)}");
 
-            try
-            {
-                var countries = await _unitOfWork.CountryRepository.GetAllCountriesWithDetails();
-                var countriesDto = _mapper.Map<List<CountryDto>>(countries);
+            var countries = await _unitOfWork.CountryRepository.GetAllCountriesWithDetails();
+            var countriesDto = _mapper.Map<List<CountryDto>>(countries);
 
-                _logger.LogInformation($"Successfully fetched and mapped {nameof(CountryDto)}");
-                return countriesDto;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error fetching and mapping");
-                throw;
-            }
+            _logger.LogInformation($"Successfully fetched and mapped {nameof(CountryDto)}");
+            return countriesDto;
         }
     }
 }
