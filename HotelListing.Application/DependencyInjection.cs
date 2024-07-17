@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Marvin.Cache.Headers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,19 @@ namespace HotelListing.Application
                 options.DefaultApiVersion = new ApiVersion(majorVersion: 1, minorVersion: 0);
                 options.ApiVersionReader = new HeaderApiVersionReader("api-version");
             });
+
+            services.AddResponseCaching();
+            services.AddHttpCacheHeaders(
+                (expirationOptions) =>
+                {
+                    expirationOptions.MaxAge = 120;
+                    expirationOptions.CacheLocation = CacheLocation.Private;
+                },
+                (validationOptions) =>
+                {
+                    validationOptions.MustRevalidate = true;
+                }
+            );
 
             return services;
         }

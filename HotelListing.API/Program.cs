@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Serilog;
 using Serilog.Events;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,7 +42,15 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddControllers()
+builder.Services.AddControllers(
+//config =>
+//{
+//    config.CacheProfiles.Add("120SecondsDuration", new CacheProfile
+//    {
+//        Duration = 120
+//    });
+//}
+)
     .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
 var app = builder.Build();
@@ -64,6 +73,10 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
+
+app.UseResponseCaching();
+
+app.UseHttpCacheHeaders();
 
 app.UseAuthorization();
 
