@@ -7,6 +7,7 @@ using Serilog;
 using Serilog.Events;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using AspNetCoreRateLimit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.File(
-        path: "D:\\User\\Jansen\\Self Study\\2024 - 07 - JULY\\HotelListing\\Logs\\log-.txt",
+        path: "D:\\User\\Jansen\\Self Study\\2024 - 07 - JULY - Cqrs\\HotelListing\\Logs\\log-.txt",
         outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
         rollingInterval: RollingInterval.Day,
         restrictedToMinimumLevel: LogEventLevel.Information
@@ -62,22 +63,22 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-app.UseAuthentication();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseMiddleware<ExceptionMiddleware>();
-
-app.UseSwagger();
-
-app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
 
 app.UseResponseCaching();
-
 app.UseHttpCacheHeaders();
+app.UseIpRateLimiting();
 
+app.UseRouting();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using AspNetCoreRateLimit;
 using Marvin.Cache.Headers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -39,6 +40,27 @@ namespace HotelListing.Application
                     validationOptions.MustRevalidate = true;
                 }
             );
+
+            services.AddMemoryCache();
+            var rateLimitRules = new List<RateLimitRule>
+            {
+                new RateLimitRule
+                {
+                    Endpoint = "*",
+                    Limit = 1, // how many calls
+                    Period = "5s" // per 5s
+                }
+            };
+
+            services.Configure<IpRateLimitOptions>(options =>
+            {
+                options.GeneralRules = rateLimitRules;
+            });
+
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+            services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
 
             return services;
         }

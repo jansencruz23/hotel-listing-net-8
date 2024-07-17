@@ -4,6 +4,7 @@ using HotelListing.Application.Features.Hotels.Requests.Commands;
 using HotelListing.Application.Features.Hotels.Requests.Queries;
 using HotelListing.Application.Models.Pagination;
 using HotelListing.Application.Responses;
+using Marvin.Cache.Headers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.WebSockets;
