@@ -10,5 +10,5 @@ using System.Threading.Tasks;
 
 namespace HotelListing.Application.Features.Hotels.Requests.Queries
 {
-    public record GetHotelListRequest(RequestParams RequestParams = null) : IRequest<PagedQueryResponse<HotelDto>>;
+    public record GetHotelListRequest(RequestParams RequestParams) : IRequest<PagedQueryResponse<HotelDto>>;
 }

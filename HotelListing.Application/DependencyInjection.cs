@@ -28,18 +28,19 @@ namespace HotelListing.Application
                 options.ApiVersionReader = new HeaderApiVersionReader("api-version");
             });
 
-            services.AddResponseCaching();
-            services.AddHttpCacheHeaders(
-                (expirationOptions) =>
-                {
-                    expirationOptions.MaxAge = 120;
-                    expirationOptions.CacheLocation = CacheLocation.Private;
-                },
-                (validationOptions) =>
-                {
-                    validationOptions.MustRevalidate = true;
-                }
-            );
+            //services.AddResponseCaching();
+            //services.AddHttpCacheHeaders(
+
+            //    //(expirationOptions) =>
+            //    //{
+            //    //    expirationOptions.MaxAge = 120;
+            //    //    expirationOptions.CacheLocation = CacheLocation.Private;
+            //    //},
+            //    //(validationOptions) =>
+            //    //{
+            //    //    validationOptions.MustRevalidate = true;
+            //    //}
+            //);
 
             services.AddMemoryCache();
             var rateLimitRules = new List<RateLimitRule>
@@ -47,7 +48,7 @@ namespace HotelListing.Application
                 new RateLimitRule
                 {
                     Endpoint = "*",
-                    Limit = 1, // how many calls
+                    Limit = 50, // how many calls
                     Period = "5s" // per 5s
                 }
             };
@@ -55,6 +56,7 @@ namespace HotelListing.Application
             services.Configure<IpRateLimitOptions>(options =>
             {
                 options.GeneralRules = rateLimitRules;
+                // options.EnableEndpointRateLimiting = true;
             });
 
             services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();

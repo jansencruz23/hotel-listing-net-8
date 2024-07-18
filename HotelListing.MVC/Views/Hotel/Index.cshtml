@@ -69,7 +69,7 @@
     @for (int i = 1; i <= Model.PageCount; i++)
     {
         <li class="@(i == Model.PageNumber ? "page-item active" : "page-item")">
-            <a class="page-link" href="@Url.Action("Index", new { pageNumber = i, pageSize = 2 })">@i</a>
+            <a class="page-link" href="@Url.Action("Index", new { pageNumber = i, pageSize = Model.PageSize })">@i</a>
         </li>
     }
 </ul>

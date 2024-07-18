@@ -27,7 +27,9 @@ namespace HotelListing.API.Controllers
 
         // GET: api/<HotelController>
         [HttpGet]
-        public async Task<ActionResult<PagedQueryResponse<HotelDto>>> Get([FromQuery] RequestParams requestParams = null)
+        //[HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 99999)]
+        //[HttpCacheValidation(MustRevalidate = true)]
+        public async Task<ActionResult<PagedQueryResponse<HotelDto>>> Get([FromQuery] RequestParams requestParams)
         {
             var response = await _mediator.Send(new GetHotelListRequest(requestParams));
             return Ok(response);

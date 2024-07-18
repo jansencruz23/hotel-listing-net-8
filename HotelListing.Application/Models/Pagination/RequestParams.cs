@@ -9,8 +9,8 @@ namespace HotelListing.Application.Models.Pagination
 {
     public class RequestParams
     {
-        const int maxPageSize = 2;
-        private int _pageSize = 10;
+        const int maxPageSize = 50;
+        private int _pageSize = 5;
 
         public int PageNumber { get; set; } = 1;
         public int PageSize

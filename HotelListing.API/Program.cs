@@ -64,7 +64,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(c =>
+{
+    string swaggerJsonBasePath = string.IsNullOrWhiteSpace(c.RoutePrefix) ? "." : "..";
+    c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "Hotel Listing API");
+});
 
 app.UseMiddleware<ExceptionMiddleware>();
 
@@ -72,8 +76,8 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
 
-app.UseResponseCaching();
-app.UseHttpCacheHeaders();
+//app.UseResponseCaching();
+//app.UseHttpCacheHeaders();
 app.UseIpRateLimiting();
 
 app.UseRouting();
