@@ -8,11 +8,14 @@ using Serilog.Events;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using AspNetCoreRateLimit;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 Log.Logger = new LoggerConfiguration()
     .WriteTo.File(
         path: "D:\\User\\Jansen\\Self Study\\2024 - 07 - JULY - Cqrs\\HotelListing\\Logs\\log-.txt",
@@ -42,6 +45,10 @@ builder.Services.AddCors(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHealthChecks()
+    .AddSqlServer(connectionString);
+builder.Services.AddHealthChecksUI()
+    .AddInMemoryStorage();
 
 builder.Services.AddControllers(
 //config =>
@@ -69,6 +76,13 @@ app.UseSwaggerUI(c =>
     string swaggerJsonBasePath = string.IsNullOrWhiteSpace(c.RoutePrefix) ? "." : "..";
     c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "Hotel Listing API");
 });
+
+app.MapHealthChecks("/healthcheck", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
+
+app.MapHealthChecksUI();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
