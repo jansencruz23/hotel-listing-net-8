@@ -76,16 +76,20 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
 
-//app.UseResponseCaching();
-//app.UseHttpCacheHeaders();
-app.UseIpRateLimiting();
-
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+//app.UseResponseCaching();
+//app.UseHttpCacheHeaders();
+app.UseIpRateLimiting();
+
+app.UseEndpoints(endpoints =>
+{
+    _ = endpoints.MapControllers();
+});
+//app.MapControllers();
 
 try
 {

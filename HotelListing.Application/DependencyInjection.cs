@@ -30,16 +30,15 @@ namespace HotelListing.Application
 
             //services.AddResponseCaching();
             //services.AddHttpCacheHeaders(
-
-            //    //(expirationOptions) =>
-            //    //{
-            //    //    expirationOptions.MaxAge = 120;
-            //    //    expirationOptions.CacheLocation = CacheLocation.Private;
-            //    //},
-            //    //(validationOptions) =>
-            //    //{
-            //    //    validationOptions.MustRevalidate = true;
-            //    //}
+            //(expirationOptions) =>
+            //{
+            //    expirationOptions.MaxAge = 120;
+            //    expirationOptions.CacheLocation = CacheLocation.Private;
+            //},
+            //(validationOptions) =>
+            //{
+            //    validationOptions.MustRevalidate = true;
+            //}
             //);
 
             services.AddMemoryCache();

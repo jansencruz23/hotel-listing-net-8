@@ -1,7 +1,10 @@
 ﻿using Asp.Versioning;
 using HotelListing.Application.DTOs.Hotel;
-using HotelListing.Application.Features.Hotels.Requests.Commands;
-using HotelListing.Application.Features.Hotels.Requests.Queries;
+using HotelListing.Application.Features.Hotels.Commands.CreateHotel;
+using HotelListing.Application.Features.Hotels.Commands.DeleteHotel;
+using HotelListing.Application.Features.Hotels.Commands.UpdateHotel;
+using HotelListing.Application.Features.Hotels.Queries.GetHotel;
+using HotelListing.Application.Features.Hotels.Queries.GetHotelList;
 using HotelListing.Application.Models.Pagination;
 using HotelListing.Application.Responses;
 using Marvin.Cache.Headers;
@@ -22,13 +25,12 @@ namespace HotelListing.API.Controllers
 
         public HotelController(IMediator mediator)
         {
-            _mediator = mediator;
+            _mediator = mediator;    
         }
 
         // GET: api/<HotelController>
         [HttpGet]
         //[HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 99999)]
-        //[HttpCacheValidation(MustRevalidate = true)]
         public async Task<ActionResult<PagedQueryResponse<HotelDto>>> Get([FromQuery] RequestParams requestParams)
         {
             var response = await _mediator.Send(new GetHotelListRequest(requestParams));

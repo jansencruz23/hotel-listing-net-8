@@ -1,6 +1,9 @@
 ﻿using HotelListing.Application.DTOs.Country;
-using HotelListing.Application.Features.Countries.Requests.Commands;
-using HotelListing.Application.Features.Countries.Requests.Queries;
+using HotelListing.Application.Features.Countries.Commands.CreateCountry;
+using HotelListing.Application.Features.Countries.Commands.DeleteCountry;
+using HotelListing.Application.Features.Countries.Commands.UpdateCountry;
+using HotelListing.Application.Features.Countries.Queries.GetCountry;
+using HotelListing.Application.Features.Countries.Queries.GetCountryList;
 using HotelListing.Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

@@ -1,6 +1,6 @@
 ﻿using Asp.Versioning;
 using HotelListing.Application.DTOs.Hotel;
-using HotelListing.Application.Features.Hotels.Requests.Queries;
+using HotelListing.Application.Features.Hotels.Queries.GetHotelList;
 using HotelListing.Application.Models.Pagination;
 using HotelListing.Application.Responses;
 using MediatR;
