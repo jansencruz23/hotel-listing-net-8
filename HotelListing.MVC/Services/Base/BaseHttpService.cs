@@ -1,5 +1,6 @@
 ﻿using HotelListing.MVC.Contracts;
 using HotelListing.MVC.Services.Base.Responses;
+using Microsoft.Build.Evaluation;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 
@@ -29,25 +30,27 @@ namespace HotelListing.MVC.Services.Base
                 Success = false
             };
 
-            if (ex.StatusCode == StatusCodes.Status400BadRequest)
+            switch (ex.StatusCode)
             {
-                response.Message = "Validation errors have occurred.";
-                response.Errors = errorResponse.Errors;
-                return response;
-            }
-            else if (ex.StatusCode == StatusCodes.Status404NotFound)
-            {
-                response.Message = "The requested item could not be found.";
-                return response;
-            }
-            else if (ex.StatusCode == StatusCodes.Status401Unauthorized) // sample lang
-            {
-                response.Message = "Id ak edep otid!";
-                return response;
-            }
-            else
-            {
-                return response;
+                case StatusCodes.Status400BadRequest:
+                    response.Message = "Validation errors have occurred.";
+                    response.Errors = errorResponse.Errors;
+                    return response;
+
+                case StatusCodes.Status404NotFound:
+                    response.Message = "The requested item could not be found.";
+                    return response;
+
+                case StatusCodes.Status409Conflict:
+                    response.Message = "The item you attempted to update was modified by another user.";
+                    return response;
+
+                case StatusCodes.Status401Unauthorized: // sample lang
+                    response.Message = "You are unauthorized to visit this page";
+                    return response;
+
+                default:
+                    return response;
             }
         }
 

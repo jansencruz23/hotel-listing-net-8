@@ -67,6 +67,7 @@ namespace HotelListing.Persistence.Repositories.Common
 
         public void Update(T entity)
         {
+            _dbContext.Entry(entity).OriginalValues["Version"] = entity.Version;
             _dbContext.Update(entity);
         }
     }

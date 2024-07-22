@@ -1,4 +1,5 @@
-﻿using HotelListing.Application.Contracts.Identity;
+﻿using HotelListing.Application.Abstractions.Identity;
+using HotelListing.Application.Contracts.Identity;
 using HotelListing.Application.Models.Identity;
 using HotelListing.Identity.Models;
 using HotelListing.Identity.Services;
@@ -25,6 +26,7 @@ namespace HotelListing.Identity
             var jwtKey = Environment.GetEnvironmentVariable("HOTELLISTING_JWT_KEY");
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
+            services.AddScoped<IUserService, UserService>();
             services.Configure<JwtSettings>(jwtSettingsConfig);
             services.AddDbContext<HotelListingIdentityDbContext>(options =>
                 options.UseSqlServer(connectionString,

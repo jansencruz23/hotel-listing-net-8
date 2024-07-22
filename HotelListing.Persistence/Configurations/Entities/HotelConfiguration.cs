@@ -13,6 +13,9 @@ namespace HotelListing.Persistence.Configurations.Entities
     {
         public void Configure(EntityTypeBuilder<Hotel> builder)
         {
+            builder.Property(q => q.Version)
+                .IsConcurrencyToken(); // For other DB
+
             builder.HasData(
                 new Hotel
                 {

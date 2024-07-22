@@ -16,5 +16,6 @@ namespace HotelListing.Application.DTOs.Hotel
         public double Rating { get; set; }
         public CountryDto Country { get; set; }
         public int CountryId { get; set; }
+        public Guid Version { get; set; }
     }
 }

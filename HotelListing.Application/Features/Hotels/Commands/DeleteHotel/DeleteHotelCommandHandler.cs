@@ -6,6 +6,7 @@ using HotelListing.Application.Features.Hotels.Commands.UpdateHotel;
 using HotelListing.Application.Responses;
 using HotelListing.Domain.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -36,13 +37,21 @@ namespace HotelListing.Application.Features.Hotels.Commands.DeleteHotel
             if (!existing)
             {
                 response.Success = false;
-                response.Message = $"{nameof(Hotel)} with id: {request.Id} is not existing";
+                response.Message = $"{nameof(Hotel)} with id: {request.Id} is not existing. It may be deleted by another user or it never existed.";
 
                 throw new NotFoundException(nameof(Hotel), request.Id);
             }
 
-            await _unitOfWork.HotelRepository.Delete(request.Id);
-            await _unitOfWork.SaveAsync();
+            try
+            {
+                await _unitOfWork.HotelRepository.Delete(request.Id);
+                await _unitOfWork.SaveAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                _logger.LogError($"Concurrency error. {ex.Message}");
+                throw new ConcurrencyException("The entity you attempted to update was deleted by another user.", ex);
+            }
 
             response.Success = true;
             response.Message = "Deletion is successful";

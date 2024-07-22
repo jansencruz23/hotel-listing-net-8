@@ -29,6 +29,8 @@ namespace HotelListing.MVC.Services
             {
                 var response = new Response<int>();
                 var hotelDto = _mapper.Map<CreateHotelDto>(hotel);
+
+                AddBearerToken();
                 var apiResponse = await _client.HotelPOSTAsync(hotelDto);
 
                 if (apiResponse.Success)
@@ -57,6 +59,8 @@ namespace HotelListing.MVC.Services
             try
             {
                 var response = new Response<int>();
+
+                AddBearerToken();
                 var apiResponse = await _client.HotelDELETEAsync(id);
 
                 if (apiResponse.Success)
@@ -105,6 +109,8 @@ namespace HotelListing.MVC.Services
             {
                 var response = new Response<int>();
                 var hotelDto = _mapper.Map<UpdateHotelDto>(hotel);
+
+                AddBearerToken();
                 var apiResponse = await _client.HotelPUTAsync(id, hotelDto);
 
                 if (apiResponse.Success)

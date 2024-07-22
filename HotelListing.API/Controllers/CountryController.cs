@@ -15,7 +15,7 @@ namespace HotelListing.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class CountryController(
         IMediator _mediator
         ) : ControllerBase

@@ -1,6 +1,7 @@
 ﻿using HotelListing.API.Models;
 using HotelListing.Application.Exceptions;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 
 namespace HotelListing.API.Middlewares
@@ -70,6 +71,18 @@ namespace HotelListing.API.Middlewares
                     };
                     break;
 
+                case DbUpdateConcurrencyException exception:
+                    statusCode = HttpStatusCode.Conflict;
+                    var concurrencyException = new ConcurrencyException("A concurrency error occurred.", exception);
+                    problemDetails = new CustomProblemDetails
+                    {
+                        Title = "Concurrency Error",
+                        Status = (int)statusCode,
+                        Type = nameof(DbUpdateConcurrencyException),
+                        Detail = concurrencyException.Message
+                    };
+                    break;
+
                 case UnauthorizedAccessException exception:
                     statusCode = HttpStatusCode.Unauthorized;
                     problemDetails = new CustomProblemDetails
@@ -90,7 +103,7 @@ namespace HotelListing.API.Middlewares
                         Detail = ex.StackTrace,
                     };
                     break;
-                }
+            }
 
             _logger.LogError($"An error occured. Status code: {statusCode}. Title: {problemDetails.Title}. Message: {problemDetails.Detail}.");
             httpContext.Response.StatusCode = (int)statusCode;

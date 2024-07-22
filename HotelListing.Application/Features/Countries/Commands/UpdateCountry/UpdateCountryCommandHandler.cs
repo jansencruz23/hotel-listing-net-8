@@ -6,6 +6,7 @@ using HotelListing.Application.Exceptions;
 using HotelListing.Application.Responses;
 using HotelListing.Domain.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -50,8 +51,17 @@ namespace HotelListing.Application.Features.Countries.Commands.UpdateCountry
             }
 
             var country = _mapper.Map<Country>(request.CountryDto);
-            _unitOfWork.CountryRepository.Update(country);
-            await _unitOfWork.SaveAsync();
+
+            try
+            {
+                _unitOfWork.CountryRepository.Update(country);
+                await _unitOfWork.SaveAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                _logger.LogError($"Concurrency error. {ex.Message}");
+                throw new ConcurrencyException("The entity you attempted to update was modified by another user.", ex);
+            }
 
             response.Success = true;
             response.Message = "Updation is successful";

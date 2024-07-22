@@ -11,5 +11,6 @@ namespace HotelListing.Application.DTOs.Country
     {
         public string Name { get; set; }
         public string CodeName { get; set; }
+        public Guid Version { get; set; }
     }
 }
